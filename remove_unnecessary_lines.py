@@ -18,9 +18,9 @@ output = []
 empty_lines_in_row = 0
 for line in data.splitlines():
     # trim each line
-    line = line.strip()
+    line_trimmed = line.strip()
 
-    if line == '':
+    if line_trimmed == '':
         empty_lines_in_row += 1
     else:
         if empty_lines_in_row > 1:
@@ -34,5 +34,10 @@ for line in data.splitlines():
 # set output as clipboard data again
 win32clipboard.OpenClipboard()
 win32clipboard.EmptyClipboard()
-win32clipboard.SetClipboardText('\n'.join(output))
+output = '\n'.join(output)
+try:
+    win32clipboard.SetClipboardText(output)
+except Exception:
+    print(output)
+
 win32clipboard.CloseClipboard()
